@@ -133,7 +133,7 @@ option(EVENT__DISABLE_DEBUG_MODE
     "Define if libevent should build without support for a debug mode" OFF)
 
 option(EVENT__ENABLE_VERBOSE_DEBUG
-    "Enables verbose debugging" OFF)
+    "Enables verbose debugging" ON)
 
 option(EVENT__DISABLE_MM_REPLACEMENT
     "Define if libevent should not allow replacing the mm functions" OFF)
