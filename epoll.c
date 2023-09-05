@@ -516,6 +516,14 @@ epoll_dispatch(struct event_base *base, struct timeval *tv)
 #if defined(EVENT__HAVE_EPOLL_PWAIT2)
 	res = epoll_pwait2(epollop->epfd, events, epollop->nevents, tv ? &ts : NULL, NULL);
 #else /* no epoll_pwait2() */
+
+/*
+	The epoll_wait() system call waits for events on the epoll(7)
+	instance referred to by the file descriptor epfd.  The buffer
+	pointed to by events is used to return information from the ready
+	list about file descriptors in the interest list that have some
+	events available.
+*/
 	res = epoll_wait(epollop->epfd, events, epollop->nevents, timeout);
 #endif /* EVENT__HAVE_EPOLL_PWAIT2 */
 

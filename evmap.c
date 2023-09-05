@@ -449,6 +449,7 @@ evmap_signal_init(struct evmap_signal *entry)
 int
 evmap_signal_add_(struct event_base *base, int sig, struct event *ev)
 {
+	/* 在base->evsel->init(base); 初始化 */
 	const struct eventop *evsel = base->evsigsel;
 	struct event_signal_map *map = &base->sigmap;
 	struct evmap_signal *ctx = NULL;

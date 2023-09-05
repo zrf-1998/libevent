@@ -105,22 +105,27 @@ struct name {								\
 struct event;
 
 struct event_callback {
+	/* 下一个evcb节点 */
 	TAILQ_ENTRY(event_callback) evcb_active_next;
+	/* 由一组宏定义描述evcb的状态 INIT,ACTIVE,FINALIZING,TIMEOUT... */
 	short evcb_flags;
 	ev_uint8_t evcb_pri;	/* smaller numbers are higher priority */
+	/* 由一组宏定义描述evcb的类型，用以从下面的联合体中选择回到函数的函数原型 */
 	ev_uint8_t evcb_closure;
 	/* allows us to adopt for different types of events */
-        union {
+    union {
 		void (*evcb_callback)(evutil_socket_t, short, void *);
 		void (*evcb_selfcb)(struct event_callback *, void *);
 		void (*evcb_evfinalize)(struct event *, void *);
 		void (*evcb_cbfinalize)(struct event_callback *, void *);
 	} evcb_cb_union;
+	/* callback的入参 */
 	void *evcb_arg;
 };
 
 struct event_base;
 struct event {
+	/* 记录active队列相关的属性、方法、参数 */
 	struct event_callback ev_evcallback;
 
 	/* for managing timeouts */
@@ -128,6 +133,8 @@ struct event {
 		TAILQ_ENTRY(event) ev_next_with_common_timeout;
 		size_t min_heap_idx;
 	} ev_timeout_pos;
+
+	/* socket fd */
 	evutil_socket_t ev_fd;
 
 	short ev_events;
