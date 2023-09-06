@@ -177,3 +177,4 @@ rules.ninja
 
 # test
 /build/Testing/
+mytest/qtest
